@@ -1,0 +1,38 @@
+# Database dumps
+*.sql
+
+# Docker / runtime
+tmp/
+node_modules/
+
+# WordPress uploads (5.7GB of media — too large for git)
+public/wp-content/uploads/
+
+# WordPress core (can be reinstalled via Docker)
+public/wp-admin/
+public/wp-includes/
+
+# WordPress plugins (installed via existing site backup)
+public/wp-content/plugins/
+
+# Parent theme (only child theme has our customizations)
+public/wp-content/themes/flatsome/
+
+# Other WP generated/cache dirs
+public/wp-content/cache/
+public/wp-content/upgrade/
+public/wp-content/wflogs/
+public/wp-content/languages/
+
+# Misc WP root files
+public/*.php
+public/.htaccess
+public/.ftpquota
+public/.tmb/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# PHP upload config (local Docker override)
+php-uploads.ini

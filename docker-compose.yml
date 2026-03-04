@@ -1,0 +1,40 @@
+services:
+  db:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: hamiltondevices
+      MYSQL_USER: hamiltondevices
+      MYSQL_PASSWORD: 6oiVitjQl3RbkQG
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./hamiltondevices.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - "3307:3306"
+    command: >
+      --max_allowed_packet=512M
+      --innodb_buffer_pool_size=1G
+      --innodb_log_file_size=256M
+      --innodb_flush_log_at_trx_commit=0
+      --innodb_doublewrite=0
+
+  wordpress:
+    image: wordpress:6.7-php8.2-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: hamiltondevices
+      WORDPRESS_DB_USER: hamiltondevices
+      WORDPRESS_DB_PASSWORD: 6oiVitjQl3RbkQG
+      WORDPRESS_TABLE_PREFIX: wp_
+    volumes:
+      - ./public/wp-content:/var/www/html/wp-content
+      - ./php-uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+
+volumes:
+  db_data:

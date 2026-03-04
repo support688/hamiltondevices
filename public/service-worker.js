@@ -1,0 +1,1 @@
+importScripts("https://omnisnippet1.com/inshop/service-worker.js");
